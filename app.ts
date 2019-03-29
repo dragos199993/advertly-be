@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 import * as express from 'express';
 import * as morgan from 'morgan';
 import * as mongoose from 'mongoose';
@@ -29,4 +29,3 @@ mongoose.connect(mongodbURI, { useNewUrlParser: true })
   .catch(err => console.error(err));
 
 export { app };
-
