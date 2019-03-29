@@ -13,6 +13,11 @@ export default function setRoutes(app) {
 
   // Posts
   router.route(POSTS).get(postCtrl.getAll);
+  router.route('/test').get((req, res) => {
+    res.json({
+      test: "works"
+    })
+  });
   router.route(POST).post(postCtrl.insert);
   router.route(`${ POSTS }${ COUNT }`).get(postCtrl.count);
   router.route(`${ POST }${ ID }`).get(postCtrl.get);
