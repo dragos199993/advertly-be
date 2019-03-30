@@ -10,7 +10,6 @@ const app = express();
 app.set('port', (process.env.PORT || 3000));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-console.log('works');
 let mongodbURI;
 if (process.env.NODE_ENV === ENV_TEST) {
   mongodbURI = process.env.MONGODB_TEST_URI;
