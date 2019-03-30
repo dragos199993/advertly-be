@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === ENV_TEST) {
   mongodbURI = process.env.MONGODB_URI;
   app.use(morgan(ENV_DEV));
 }
-console.log("DEPLOYMENT WORKED, YAYyy");
+console.log("DEPLOYMENT WORKED yeeeei");
 mongoose.Promise = global.Promise;
 mongoose.connect(mongodbURI, { useNewUrlParser: true })
   .then(db => {
