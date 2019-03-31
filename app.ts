@@ -2,6 +2,7 @@ require('dotenv').config();
 import * as express from 'express';
 import * as morgan from 'morgan';
 import * as mongoose from 'mongoose';
+import * as cors from 'cors';
 
 import setRoutes from './routes';
 import { ENV_TEST, ENV_DEV } from './config/constants/server';
@@ -10,6 +11,7 @@ const app = express();
 app.set('port', (process.env.PORT || 3000));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 let mongodbURI;
 if (process.env.NODE_ENV === ENV_TEST) {
