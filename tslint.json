@@ -40,7 +40,6 @@
       "check-whitespace"
     ],
     "radix": true,
-    "semicolon": true,
     "switch-default": true,
     "typedef": [
       "call-signature",

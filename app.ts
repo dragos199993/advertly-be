@@ -10,6 +10,7 @@ const app = express();
 app.set('port', (process.env.PORT || 3000));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 let mongodbURI;
 if (process.env.NODE_ENV === ENV_TEST) {
   mongodbURI = process.env.MONGODB_TEST_URI;
@@ -17,8 +18,8 @@ if (process.env.NODE_ENV === ENV_TEST) {
   mongodbURI = process.env.MONGODB_URI;
   app.use(morgan(ENV_DEV));
 }
-console.log("DEPLOYMENT WORKEDDDDDDDD");
 mongoose.Promise = global.Promise;
+mongoose.set('useCreateIndex', true);
 mongoose.connect(mongodbURI, { useNewUrlParser: true })
   .then(db => {
     setRoutes(app);

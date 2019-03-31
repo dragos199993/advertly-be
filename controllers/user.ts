@@ -2,6 +2,7 @@ import * as jwt from 'jsonwebtoken';
 
 import User from '../models/user';
 import BaseCtrl from './base';
+import { validationResult } from 'express-validator/check';
 
 export default class UserCtrl extends BaseCtrl {
   model = User;
@@ -28,4 +29,26 @@ export default class UserCtrl extends BaseCtrl {
     });
   };
 
+  /**
+   * Insert item
+   * @param req
+   * @param res
+   */
+  insert = async (req, res) => {
+    const userExists = await User.find({ email: req.body.email });
+    if (userExists.length) {
+      return res.status(400).json({ error: 'User already exists' });
+    }
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+      }
+
+      const obj = await new this.model(req.body).save();
+      res.status(201).json(obj);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
+  };
 }

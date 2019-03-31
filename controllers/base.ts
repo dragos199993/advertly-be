@@ -1,3 +1,5 @@
+import { validationResult } from 'express-validator/check';
+
 abstract class BaseCtrl {
 
   abstract model: any;
@@ -37,6 +39,12 @@ abstract class BaseCtrl {
    */
   insert = async (req, res) => {
     try {
+
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+      }
+
       const obj = await new this.model(req.body).save();
       res.status(201).json(obj);
     } catch (err) {
@@ -73,11 +81,11 @@ abstract class BaseCtrl {
   };
 
   /**
-   * Delete item
+   * Remove item
    * @param req
    * @param res
    */
-  delete = async (req, res) => {
+  remove = async (req, res) => {
     try {
       await this.model.findOneAndRemove({ _id: req.params.id });
       res.sendStatus(200);

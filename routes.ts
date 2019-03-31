@@ -1,9 +1,9 @@
 import * as express from 'express';
-
 import PostCtrl from './controllers/post';
 import UserCtrl from './controllers/user';
 import { POSTS, LOGIN, API, USERS, POST, USER, COUNT, ID } from './config/constants/routes';
 import { authProtect } from './middlewares/authProtect';
+import { postValidator, userValidator } from './helpers/validators';
 
 export default function setRoutes(app) {
 
@@ -14,23 +14,23 @@ export default function setRoutes(app) {
   /****************/
   /* Posts routes */
   /****************/
-  router.get(POSTS, authProtect, postCtrl.getAll);
-  router.post(POST, postCtrl.insert);
+  router.get(POSTS, postCtrl.getAll);
+  router.post(POST, postValidator(), postCtrl.insert);
   router.get(`${ POST }${ ID }`, postCtrl.get);
-  router.get(`${ POSTS }${ COUNT }`, authProtect, postCtrl.count);
+  router.get(`${ POSTS }${ COUNT }`, postCtrl.count);
   router.put(`${ POST }${ ID }`, postCtrl.update);
-  router.delete(`${ POST }${ ID }`, postCtrl.delete);
+  router.delete(`${ POST }${ ID }`, postCtrl.remove);
 
   /****************/
   /* Users Routes */
   /****************/
   router.post(LOGIN, userCtrl.login);
   router.get(USERS, userCtrl.getAll);
-  router.post(USER, userCtrl.insert);
+  router.post(USER, userValidator(), userCtrl.insert);
   router.get(`${ USERS }${ COUNT }`, userCtrl.count);
   router.get(`${ USER }${ ID }`, userCtrl.get);
   router.put(`${ USER }${ ID }`, userCtrl.update);
-  router.delete(`${ USER }${ ID }`, userCtrl.delete);
+  router.delete(`${ USER }${ ID }`, userCtrl.remove);
 
   app.use(API, router);
 }
