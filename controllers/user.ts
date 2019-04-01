@@ -21,9 +21,11 @@ export default class UserCtrl extends BaseCtrl {
           });
         }
         const token = jwt.sign({ user: user }, process.env.SECRET_TOKEN); // , { expiresIn: 10 } seconds
+        const { username, email, role, created, _id } = user;
         res.status(200).json({
           success: 'true',
-          token: token
+          token: token,
+          user: { username, email, role, created, _id }
         });
       });
     });
@@ -49,6 +51,15 @@ export default class UserCtrl extends BaseCtrl {
       res.status(201).json(obj);
     } catch (err) {
       return res.status(400).json({ error: err.message });
+    }
+  };
+
+  get = async (req, res) => {
+    try {
+      const obj = await this.model.findOne({ _id: req.params.id });
+      res.status(200).json(obj);
+    } catch (err) {
+      return res.status(500).json({ error: 'User not found' });
     }
   };
 }

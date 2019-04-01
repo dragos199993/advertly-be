@@ -8,7 +8,7 @@ import setRoutes from './routes';
 import { ENV_TEST, ENV_DEV } from './config/constants/server';
 
 const app = express();
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 5000));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
