@@ -13,6 +13,8 @@ export const LOGIN: string = '/login';
 export const USERS: string = '/users';
 export const USER: string = '/user';
 
+export const PROFILE: string = '/profile';
+
 /**
  * Shared
  */

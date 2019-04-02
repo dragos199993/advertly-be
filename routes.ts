@@ -1,7 +1,7 @@
 import * as express from 'express';
 import PostCtrl from './controllers/post';
 import UserCtrl from './controllers/user';
-import { POSTS, LOGIN, API, USERS, POST, USER, COUNT, ID } from './config/constants/routes';
+import { POSTS, LOGIN, API, USERS, POST, USER, COUNT, ID, PROFILE } from './config/constants/routes';
 import { authProtect, hasAuthorization } from './middlewares/authProtect';
 import { postValidator, userValidator } from './helpers/validators';
 
@@ -29,6 +29,7 @@ export default function setRoutes(app) {
   router.post(USER, userValidator(), userCtrl.insert);
   router.get(`${ USERS }${ COUNT }`, userCtrl.count);
   router.get(`${ USER }${ ID }`, userCtrl.get);
+  router.get(`${ PROFILE }${ ID }`, [authProtect, hasAuthorization], userCtrl.get);
   router.put(`${ USER }${ ID }`, userCtrl.update);
   router.delete(`${ USER }${ ID }`, userCtrl.remove);
   // middlware example: [authProtect, hasAuthorization]
