@@ -9,6 +9,7 @@ export default class UserCtrl extends BaseCtrl {
 
   login = (req, res) => {
     this.model.findOne({ email: req.body.email }, (err, user) => {
+      console.log(user);
       if (!user) {
         return res.status(403).json({
           email: 'Email was not found.'
